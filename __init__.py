@@ -42,12 +42,7 @@ class OBJECT_OT_my_operator(bpy.types.Operator):
     
     def execute(self, context):
         # Access the addon preferences.
-        # That is how the preferences should be accessable if they are in the same directory
         prefs = context.preferences.addons[__package__].preferences
-        # I`m not sure why, but this need to be done to access preferences from relative parent folder.
-        # Yet it works fine so far.
-        # addon_name = __package__.split('.')[0]  # Get the top-level package name
-        # prefs = context.preferences.addons[addon_name].preferences
     
         # Retrieve the properties
         my_string = prefs.my_string
@@ -112,9 +107,7 @@ class MyAddonSubMenu(bpy.types.Menu): #This is a submenu which is attached to me
 class MyAddonPreferences(bpy.types.AddonPreferences):
     # It should be the default way to declare(?) the addon preferences.
     bl_idname = __package__
-    # That's how it works now, not sure why exactly.
-    # bl_idname = __package__.split('.')[0]  # Use the top-level package name
-
+    
     # Examples of properties types:
     # String Property
     my_string: bpy.props.StringProperty(
@@ -204,8 +197,6 @@ _classes = (
     MyAddonPreferences,
     MyAddonSubMenu,
 )
-
-# register, unregister = bpy.utils.register_classes_factory(_classes)
 
 
 def register():
